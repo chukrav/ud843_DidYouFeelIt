@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Update the information displayed to the user.
 //        updateUi(earthquake);
-        new FetchNetworkData();
+        AsyncFetchNetworkData fd = new AsyncFetchNetworkData();
+        fd.execute(USGS_REQUEST_URL);
     }
 
     /**
@@ -57,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
         magnitudeTextView.setText(earthquake.perceivedStrength);
     }
 
-    private class FetchNetworkData extends AsyncTask<String, Void, Event>{
+    private class AsyncFetchNetworkData extends AsyncTask<String, Void, Event>{
 
         @Override
-        protected Event doInBackground(String... strings) {
-            Event earthquake = Utils.fetchEarthquakeData(USGS_REQUEST_URL);
+        protected Event doInBackground(String... urls) {
+            Event earthquake = Utils.fetchEarthquakeData(urls[0]);
             return earthquake;
         }
 
